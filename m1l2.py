@@ -15,10 +15,6 @@ Hi there, I am EchoBot.
 I am here to echo your kind words back to you. Just say anything nice and I'll say the exact same thing to you!\
 """)
 
-# Handle all other messages with content_type 'text' (content_types defaults to ['text'])
-@bot.message_handler(func=lambda message: True)
-def echo_message(message):
-    bot.reply_to(message, message.text)
 
 @bot.message_handler(commands='info')
 def send_info(message):
@@ -29,8 +25,10 @@ def send_info(message):
 @bot.message_handler(commands='choice')
 def send_choice(message):
     ch = random.choice(['Саша', 'Кирилл'])
-    bot.reply_to(message, ch, """\
-сегодня лох \
- """) 
+    bot.reply_to(message, f'{ch}, сегодня лох') 
+# Handle all other messages with content_type 'text' (content_types defaults to ['text'])
+@bot.message_handler(func=lambda message: True)
+def echo_message(message):
+    bot.reply_to(message, message.text)
 
 bot.infinity_polling()
